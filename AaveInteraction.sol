@@ -60,7 +60,7 @@ contract AaveInteraction {
         gateway.withdrawETH(ADDRESS_MATIC_POOL, aBalance, recipient);
         //burn 
         require(total[msg.sender] >= withdrawAmount);
-        total[msg.sender] -= withdrawamount;
+        total[msg.sender] -= withdrawAmount;
         (bool success,) = msg.sender.call[value: withdrawAmount]("");
     }
 
