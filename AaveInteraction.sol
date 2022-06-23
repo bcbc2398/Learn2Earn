@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Unlicensed
-pragma solidity 0.8.10;
+pragma solidity ^0.8.10;
 
 import "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
 import "@aave/periphery-v3/contracts/misc/interfaces/IWETHGateway.sol";
@@ -9,7 +9,7 @@ import "./LearnToken.sol";
 
 
 contract AaveInteraction {
-    mapping(address => uint256) public total;
+    mapping(address => uint256) public userLearnBalances;
     // Create varialbes to store pool address
     IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
     // address public immutable ADDRESS_WETH;
@@ -48,7 +48,7 @@ contract AaveInteraction {
             
         );
         //mint
-        total[msg.sender] += msg.value;
+        userLearnBalances[msg.sender] += msg.value;
     }
 
     function withdraw() external {
@@ -58,10 +58,7 @@ contract AaveInteraction {
 
         // sends unwrapped and store matic in SC
         gateway.withdrawETH(ADDRESS_MATIC_POOL, aBalance, recipient);
-        //burn 
-        require(total[msg.sender] >= withdrawAmount);
-        total[msg.sender] -= withdrawAmount;
-        (bool success,) = msg.sender.call[value: withdrawAmount]("");
+    
     }
 
     function deleteItAll() public onlyOwner {
