@@ -12,5 +12,6 @@ contract LearnToken is ERC20, ERC20Burnable, Ownable {
     }
     function mint(address to , uint256 amount) public onlyOwner {
         _mint(to, amount);
+        
     }
 }
